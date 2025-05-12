@@ -149,6 +149,14 @@ int roll_hash(int hash_value, char *text, int len_pattern, int index_text, int m
         * -1 + 11 = 10
         */
         hash_value = (hash_value * 10) % mod;
+        /* 
+        * This multiplication shifts the remaining characters one position left in the polynomial.
+        * While our window slides right (from "abc" to "bcd"), internally we're shifting left in the polynomial:
+        * - Original "abc": 1×10² + 2×10¹ + 3×10⁰
+        * - After removing 'a': 2×10¹ + 3×10⁰ 
+        * - After multiplying by 10: 2×10² + 3×10¹
+        * - After adding 'd': 2×10² + 3×10¹ + 4×10⁰, which is the correct hash for "bcd"
+        */
         hash_value = (hash_value + right) % mod;
         
     }
