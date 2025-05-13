@@ -54,6 +54,31 @@ int main(){
     }
     
     printf("The length of the longest common subsequence is: %d\n", table[len1][len2]);
+
+    // print the longest common subsequence
+    printf("The longest common subsequence is: ");
+    int index = table[len1][len2];
+    char lcs[MAX];
+    lcs[index] = '\0'; // null terminate the string
+    // we do this to make sure that the string is properly terminated
+    int i1 = len1, j1 = len2;
+    while(i1 > 0 && j1 > 0){
+        if(str1[i1 - 1] == str2[j1 - 1]){
+            lcs[index - 1] = str1[i1 - 1];
+            i1--;
+            j1--;
+            index--;
+        }
+        else if(table[i1 - 1][j1] > table[i1][j1 - 1]){ 
+            // if the value from the left is greater, we move left
+            i1--;
+        }
+        else{
+            j1--;
+            // if the value from the top is greater, we move up
+        }
+    }
+    printf("%s\n", lcs);
     
     return 0;
 }
